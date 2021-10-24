@@ -90,6 +90,7 @@
                   program = "${
                     pkgs.writeScript "find-faulty-commit" ''
                        export PATH="${nixlib.makeBinPath [pkgs.nixFlakes pkgs.jq]}:$PATH"
+                       export CURRENTFLAKE="github:W95Psp/nix-flake-fstar-extra"
                        ${pkgs.bash}/bin/bash ${./find-faulty-commit.sh} "$@"
                     ''
                   }";

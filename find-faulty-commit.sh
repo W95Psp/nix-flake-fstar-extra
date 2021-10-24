@@ -15,7 +15,7 @@ DATE_RANGE_MAX=${3:-$(date +'%s')}
 
 prepare () {
     readarray -t commits < <(
-	nix eval --json .#commits |
+	nix eval --json "$CURRENTFLAKE#commits" |
 	    jq -r ".[] | select(.timestamp >= $DATE_RANGE_MIN and .timestamp <= $DATE_RANGE_MAX) | .commit"
     )
 
@@ -115,7 +115,7 @@ status () {
 build-current-fstar () {
     commit="${commits[$current]}"
     set_current_status "build"
-    if nix build --quiet --no-link .#"fstar-bin-${commit}" 1>/dev/null 2>/dev/null; then
+    if nix build --quiet --no-link "$CURRENTFLAKE#fstar-bin-${commit}" 1>/dev/null 2>/dev/null; then
 	return 0;
     else
 	set_current_status "build-failure"
@@ -126,13 +126,13 @@ build-current-fstar () {
 test-current-fstar () {
     if build-current-fstar; then
 	set_current_status "test"
-	if nix run .#"fstar-bin-${commit}" "$MODULE" 1>"$LOGS/$commit.stdout" 2>"$LOGS/$commit.stderr"; then
+	if nix run "$CURRENTFLAKE#fstar-bin-${commit}" "$MODULE" 1>"$LOGS/$commit.stdout" 2>"$LOGS/$commit.stderr"; then
 	    set_current_status "success"
-	    # nix store delete .#"fstar-${commit}" 1>/dev/null 2>/dev/null
+	    # nix store delete "$CURRENTFLAKE#fstar-${commit}" 1>/dev/null 2>/dev/null
 	    return 0
 	else
 	    set_current_status "failure"
-	    # nix store delete .#"fstar-${commit}" 1>/dev/null 2>/dev/null
+	    # nix store delete "$CURRENTFLAKE#fstar-${commit}" 1>/dev/null 2>/dev/null
 	    return 1
 	fi
     else
