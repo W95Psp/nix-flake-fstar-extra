@@ -18,7 +18,7 @@ git clone --separate-git-dir "$DOTGIT" "https://github.com/FStarLang/fstar" "$FI
 
 touch "$DB"
 
-git --git-dir "$DOTGIT" log --pretty=format:'%H %ct' --first-parent master --after="2021-01-01" --before="today" |
+git --git-dir "$DOTGIT" log --pretty=format:'%H %ct' --after="2021-01-01" --before="today" |
     while read commit timestamp; do
 	echo "[$commit]"
         grep -q "$commit" "$DB" && {

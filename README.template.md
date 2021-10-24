@@ -10,9 +10,12 @@ Building on https://github.com/W95Psp/nix-flake-fstar, this repository is a flak
 ## Finding regressions
 **Scenario:** *a function used to typecheck at some point (with some F* version). You want to identify the commit in F* history which broke your function*.
 
-The following command will try to typecheck the F* module `MODULE` for every F* binary corresponding to the every single commit between `TIMESTAMP_MIN` and `TIMESTAMP_MAX` (two unix timestamp). *Those timestamp can be omitted, in which case every commit from `nix eval --json 'github:W95Psp/nix-flake-fstar-extra#commits'` will be used.*
+The following command will perform a dichotomic search to find the commit in the F* master branch history that breaks module `MODULE`. Timestamps `TIMESTAMP_MIN` and `TIMESTAMP_MAX` can be specified to slice the master branch history.
 
 `nix run 'github:W95Psp/nix-flake-fstar-extra#find-faulty-commit' MODULE [TIMESTAMP_MIN] [TIMESTAMP_MAX]`
+
+![](find-faulty-commit.gif)
+<!-- Note: to exclude intermediary commits from pull-requests, prepend `GIT_LOG_EXTRA_FLAGS="--first-parent master"` to the command. This will drastically reduce the number of commits to consider. -->
 
 ## Details
 <details>

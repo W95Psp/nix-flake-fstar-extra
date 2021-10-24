@@ -90,7 +90,7 @@ pretty_status () {
 
 update_pretty_status () {
     while [ "$min" -lt "$max" ]; do
-	sleep 0.7
+	sleep 0.3
 	pretty_status
     done
 }
@@ -172,4 +172,6 @@ min=$(( min + 1 ))
 while [ "$min" -lt "$max" ]; do
     step
 done
+
+kill_pretty_status
 
