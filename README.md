@@ -1,0 +1,236 @@
+# Nix Flake F* Extra
+
+Building on https://github.com/W95Psp/nix-flake-fstar, this repository is a flake which provides:
+ - a list of F* master commits with their sha256 hashes (`nix eval --json 'github:W95Psp/nix-flake-fstar-extra#commits'`);
+ - corresponding F* binaries (e.g. `nix run 'github:W95Psp/nix-flake-fstar-extra#fstar-bin-02ecab9dd1aa930bee842d77fa3564f24328e3d7' somemodule.fst`);
+ - a list of F* pull-request patches with their sha256 hashes (`nix eval --json 'github:W95Psp/nix-flake-fstar-extra#commits'`);
+ - corresponding patches (e.g. `nix build 'github:W95Psp/nix-flake-fstar-extra#pr-1909' -o 1909.patch` fetches the patch `1909.patch`);
+ - a tool to find regressions (see below).
+
+## Finding regressions
+**Scenario:** *a function used to typecheck at some point (with some F* version). You want to identify the commit in F* history which broke your function*.
+
+The following command will try to typecheck the F* module `MODULE` for every F* binary corresponding to the every single commit between `TIMESTAMP_MIN` and `TIMESTAMP_MAX` (two unix timestamp). *Those timestamp can be omitted, in which case every commit from `nix eval --json 'github:W95Psp/nix-flake-fstar-extra#commits'` will be used.*
+
+`nix run 'github:W95Psp/nix-flake-fstar-extra#find-faulty-commit' MODULE [TIMESTAMP_MIN] [TIMESTAMP_MAX]`
+
+## Details
+<details>
+  <summary>Full list of attributes availables</summary>
+
+<!-- LIST -->
+ - `fstar-bin-0014ac13070209d706914c61600d819a62956198`
+ - `fstar-bin-0063a9a2947ee5ff138bd1802fcb8670123e719e`
+ - `fstar-bin-02ecab9dd1aa930bee842d77fa3564f24328e3d7`
+ - `fstar-bin-03759f9a1a73a6bae4b72e2aa42b7624005d74ea`
+ - `fstar-bin-044c114ea3e772f4ff32ee8236bc0311e7583c14`
+ - `fstar-bin-045a8e12422f9310212da7f30d839ebb2740adb0`
+ - `fstar-bin-058826e8290c21cc89799f47c3874e5bffa3ddc3`
+ - `fstar-bin-07351229e38fdb6a90b3355932e0588f7272d56d`
+ - `fstar-bin-0a478ef6574b5e0769400a1ca49cc8e83f67894b`
+ - `fstar-bin-0ba56db7ea0c854892b0f7ddf68d9ff00abd743a`
+ - `fstar-bin-0e4a18baecc22951e61a6bedbfad31a129e3c477`
+ - `fstar-bin-0e79f5fd752b681c960f7527185b0b8b68c8e780`
+ - `fstar-bin-11173a7fb56d0c52789647a6dcae9de47067a0e0`
+ - `fstar-bin-112a971965fa9529343523e30071f9d05f7e45cf`
+ - `fstar-bin-11441e39fab73771ab0a00c72ff6d78c0b15e567`
+ - `fstar-bin-12ff59fc92977b2c0f77dba9dbba3687f995be61`
+ - `fstar-bin-13fea85893a6a7fd4423dcdea0efea8e2d9c2b67`
+ - `fstar-bin-15d850cf150bc4f5e4ba3fc551fd2509f028741b`
+ - `fstar-bin-16f48dc0e1a709e3161823001ad7dd9b44d71d79`
+ - `fstar-bin-17d55787c65f9d855fcd1a86c02fe6641c008ec0`
+ - `fstar-bin-181c9cd0ad720550bfbf279c15f74e0fb00197f6`
+ - `fstar-bin-198f26d5b058e4ef02af13f6c0af8bcd64503387`
+ - `fstar-bin-1b98481e9dd38e88b2f246977dab8a37ffa894bf`
+ - `fstar-bin-1bbfc501f4b1040ee7a87356c70c138e1e50f189`
+ - `fstar-bin-1c3db4d98327881984f9fb4b4fcd8d9caa8dea3a`
+ - `fstar-bin-1ca0f682a5318ad41b5378d9bdfee5930ae4005e`
+ - `fstar-bin-1ce5d32381c593ddfccde52724d13bf293902109`
+ - `fstar-bin-2010507fac1aef06d41f6a50787dc1b111facfdf`
+ - `fstar-bin-201718936e60a4d3bc2d1124ab4eaf42143589b7`
+ - `fstar-bin-203eda21434b28082d68132c7149fc8fc5be3897`
+ - `fstar-bin-242127c5ffe3bdfdbf3dba21c1d64183fce49462`
+ - `fstar-bin-24e8fd429430211884a9cb4d0c12197bdf9119f6`
+ - `fstar-bin-24fa017105d046ca320c92a722006057cad83d75`
+ - `fstar-bin-2602684116e1a7c9b834b589b21c2a2de818af21`
+ - `fstar-bin-26b5c07f237d842eaa7c0a2092ee3c3691ed2890`
+ - `fstar-bin-2c1e3af346ea5464f7c7cbb9e9d19fedf7abfa1e`
+ - `fstar-bin-2ca1bbb1348ad2389325cd6807315a2715163a9a`
+ - `fstar-bin-301e3d86e0cf510b4327feb5da469e21bd9e8bf1`
+ - `fstar-bin-30965e9e59775aaaa78df023bcae7f42b76560c8`
+ - `fstar-bin-31717559113a7e65254e9241e68839c849280277`
+ - `fstar-bin-31d5feb18bf613fc1b72e17f1a7fc34c6d4b8731`
+ - `fstar-bin-34329dcfe1340f391b67ab26b42a1914c73d6d6b`
+ - `fstar-bin-356fb200d7e6a1d2ccc689073752400227160ba9`
+ - `fstar-bin-36d6c1db7157769e10d6e7f7a677f6cb8dcb4e01`
+ - `fstar-bin-386f5aff29988c27a5f083cec1a6bb2aa44baf08`
+ - `fstar-bin-3b15ced5da399dfa33cba5deeb0542656c4cd314`
+ - `fstar-bin-4038c7f18f467a62cafaaf6849a6be46425a74e1`
+ - `fstar-bin-4095d9632d88132b22e76989c18bc01bc487ff69`
+ - `fstar-bin-422c2a74cb99ef118b67a2970e5fced2d5fa6671`
+ - `fstar-bin-45fe9d918f1caf20054ed64e220c2cdcc735f88f`
+ - `fstar-bin-466a9c8d707139d5d9a668e66c2b7efde7ca18a7`
+ - `fstar-bin-46d1697b445557de8c10b7cb1f9d85174d91db23`
+ - `fstar-bin-471dd3bbad3975aee7552df7fde2ed71b2beb4c8`
+ - `fstar-bin-48a9e4a90d6c7a7b1975947d00925c2ad6e33f43`
+ - `fstar-bin-49e592d0b697d6101996a2009282d09f4ec54818`
+ - `fstar-bin-4c218b64b2f1f1c515aa5ac61eb97d58e9ac98ed`
+ - `fstar-bin-510d4a610b32a00494f60c29258b10be097c2e2e`
+ - `fstar-bin-53894b59ed37353d28df7ad2e9d70e96d1476b0b`
+ - `fstar-bin-5514846e9aefccc791a8ba183754e3f4481f0bf8`
+ - `fstar-bin-58f1304f83a3e2256a3eebdd485d3ef428cd16bd`
+ - `fstar-bin-59c26ee9ab64cc811b2b77089a3da79786b1d786`
+ - `fstar-bin-59d3d1dc7ccf0d6e9ca4ae94c8d0ae1eefae554e`
+ - `fstar-bin-5afa92aa5d2c9a2a89f7480b66ac912883d5202e`
+ - `fstar-bin-5eb64446affb4a60eb08a69092450c3c92cf87dc`
+ - `fstar-bin-5f721b3f397e9144a09c52c043e6fe14bfe56a98`
+ - `fstar-bin-60cf141f488d441958566011fbb9d84a4996bf79`
+ - `fstar-bin-6104976602c1868bae39fe647be568a67c60d79e`
+ - `fstar-bin-614d000ec908540aabce2f8592454188865f63bd`
+ - `fstar-bin-61e77207d4b86dfac512092004983767c0f395a4`
+ - `fstar-bin-61f5a9d738b03a7ea19f41dbe2e56c88aec4acce`
+ - `fstar-bin-63ba918cf0a02226ee19bfbdc0d76a7ca0fdf8d7`
+ - `fstar-bin-676394273377c1bf57a3d2660ea2c384ae581a68`
+ - `fstar-bin-685d755860f0027f02878fe9d77174f0ca3604c7`
+ - `fstar-bin-6a6a43d623d9ec13984f2d8dc2fe1b117a6fffa5`
+ - `fstar-bin-6be2b60f2efb6f4cf2c8694ea0795683d4fb2ed6`
+ - `fstar-bin-6c5b989a06e9fc50e3f13239326d18b5e4cb937c`
+ - `fstar-bin-6dd9671fec95f3518d97a080dc7dfcbd9332d40e`
+ - `fstar-bin-6f0d14c122576eddcdf4a13980d6b6615455260a`
+ - `fstar-bin-6f1c80b8c66e60dbc895f1f3f96a7c87dcdc15f8`
+ - `fstar-bin-6f5d3d546d9bfd6fbaa8d7e6305ba8b6cba0b053`
+ - `fstar-bin-7621ff94bcac795fdbfccd064f3880f281cc57f7`
+ - `fstar-bin-7d016d004ac3884d686e3404b05e0a70b7b27f58`
+ - `fstar-bin-7e178690f5fe2c049e867702813d049ab1e9a2a1`
+ - `fstar-bin-7f1f9a918761f805cb1f0bd846cc7d3f07b93941`
+ - `fstar-bin-80552ec64c3791517271999255b7b257a689306e`
+ - `fstar-bin-80cb96b8c75f616fe408e327866367f85eff002a`
+ - `fstar-bin-84a1b63218eeb6b93f23289952c0acc9a881738f`
+ - `fstar-bin-87b92d7405fcb693096a5dfc0e3b497cd2808769`
+ - `fstar-bin-88686d007f13b8cbb4e97e29a9d0deeb51edaa02`
+ - `fstar-bin-897f28d9bfd49b3ae196dc0ded6e9af864ed4fbb`
+ - `fstar-bin-89964d85d0a5d14909da0ce7b5b349ea231b6db2`
+ - `fstar-bin-8b56eb5f5e2257a8f3cc23b557724bd7256a881a`
+ - `fstar-bin-8d9f4133abf2b4391be619c2c74fd46731a77e91`
+ - `fstar-bin-9016eb7be48ab8e5a54b7077cc0fa87a0f4b5901`
+ - `fstar-bin-912b6cf78e8923e65b1e3a1df712094a1d39b08a`
+ - `fstar-bin-92156a2c3b82b6e898137cbbeab91f88fff3fe9f`
+ - `fstar-bin-94b87c98c4ecad82e5a07c5063926c9c468264fb`
+ - `fstar-bin-9643bddc92f131c6764008da7ecb4e855b03b575`
+ - `fstar-bin-9752432ee2f16caadf60d4d53283c01c0ba064f3`
+ - `fstar-bin-97c0e4359d4c4b6951e632eb66d82c96a651359f`
+ - `fstar-bin-9917f9539275fd73da41de641cec4d23d9ccf311`
+ - `fstar-bin-998173b61892d1c60a5f9cf7ddc1b4c34be21098`
+ - `fstar-bin-9d0c3370f2121e164b2d07e4c0b299a5ee0ecfb3`
+ - `fstar-bin-9f92df3ff37be5e6d450fb383e1d1f219c71482a`
+ - `fstar-bin-a05210706d21a68e972d60326b94a58b099f17b5`
+ - `fstar-bin-a1c44b26b4606db4acfa1faf46922666067e64ae`
+ - `fstar-bin-ab0faf1cc91d83edfce1be3d4c0c501f57857897`
+ - `fstar-bin-ac299d8cd14279e4760988a5a383dc226f88dd69`
+ - `fstar-bin-ac6a1962c4c109f9d4b50b171b7b31b09adff7bb`
+ - `fstar-bin-ac917c546c216191a6624d4841f0a0a153428020`
+ - `fstar-bin-acae5528ea74ab3031b78ecbdb3a195bd1f9b2f5`
+ - `fstar-bin-ad2cc20f23ff15b5d65f63c8f3e58fb410902ebd`
+ - `fstar-bin-ae154350c87b3cd8dbb920361ddfd42500ce778b`
+ - `fstar-bin-b07008bc5962533be62a9747587c35ce52003e59`
+ - `fstar-bin-b2e7778862b3fdada07b978447f07078bf4ea6a8`
+ - `fstar-bin-b3b140dfa9abc27c5059ecf8b5cb3102cd89ea31`
+ - `fstar-bin-b53ba92d59d031bc51e2da3e3f7cf64efc528a75`
+ - `fstar-bin-b72723f7f8bc1373e577e9a718930715bd11ae1b`
+ - `fstar-bin-b8b1265a0f98aa7a080d38d4d3c9d523154835d1`
+ - `fstar-bin-b95d1ac83a18945266d3401acc0dcb3ce438108b`
+ - `fstar-bin-b9646e1f04c5a48d198a9ae9b4f9e5bdb466d727`
+ - `fstar-bin-bad8f01742d9ccb9ee7c35379fd2b3b81784fbd2`
+ - `fstar-bin-bbc77e99a6afa1d0194caf8a79ea73690d9818d9`
+ - `fstar-bin-bda1c4e91fa1d6d3d6f60e59d1f174a19ddf38e3`
+ - `fstar-bin-c037e4c3fc7ee6989c83c79e55b56e084c296b99`
+ - `fstar-bin-c33fc273fc4ef83127362f2109cfdd3a17ea495f`
+ - `fstar-bin-c38645fddb73139196317b7a5606f1f1156ccc97`
+ - `fstar-bin-c9664da89c54a717726041af84554a5a3c9ba923`
+ - `fstar-bin-c994d0969a55ae659299d2d9c7cb706d93a0c4fa`
+ - `fstar-bin-c9a52f5746bd080782b1e8f540f49717721860e2`
+ - `fstar-bin-ca0a2ee3892bade16166f9fb0a9843042a5468df`
+ - `fstar-bin-ca629385b426ced705a0687cdb9abb5cf8bcfb12`
+ - `fstar-bin-cb9264f27aa77dbe66115b538481e8cfb271f20b`
+ - `fstar-bin-cc604a288f5c1b22a0a8687a8415435266089cb7`
+ - `fstar-bin-cca3f329e84cd03e344228d53d4d015c6ed5cb49`
+ - `fstar-bin-ce01abfa9b413a03db8b5b1d15de7df8b53367cd`
+ - `fstar-bin-cf50228f96d5ab1e8485a5c214791915397faeb4`
+ - `fstar-bin-d194b7bc87c40d8f7eebffdb146f9a9397c86e5a`
+ - `fstar-bin-d2d3a3dec20272faae926e430fadd77c30797653`
+ - `fstar-bin-d3e7a0631b7994ac0746b956e89c3aa36347be97`
+ - `fstar-bin-d5371a90773705974c611d47eae82634fc1e3172`
+ - `fstar-bin-d67ba1e3e0d38a57b18fd8f91665aa9d2f685837`
+ - `fstar-bin-d76b61ab67f2e0fc282b8361132fa99c5e350a32`
+ - `fstar-bin-d76f1e37404c356e1a4afddb82afebaf1b8b1836`
+ - `fstar-bin-d87ff4aa6dd24cc6d3d73f239ef3370a4d865a02`
+ - `fstar-bin-d996163e0d74ecd0e5d34f5e559ce656aa42dd52`
+ - `fstar-bin-da0eb967986707dac6632ab99c86445f024e37f3`
+ - `fstar-bin-dbcf9fbbeb79a4da02e5cb19e2b8663f3a9ed26c`
+ - `fstar-bin-dc656b9e0b5e88676df1a4958e03b3131c48c55d`
+ - `fstar-bin-dd2960475c3ef7be1792a6b86a9103d05de218a0`
+ - `fstar-bin-de38b12bdff2c492f6f9411b13d8f2a3d3141af5`
+ - `fstar-bin-df64e2ee1111124e166fd422b0a52544bb707e51`
+ - `fstar-bin-e1306a56f28251bd6c982820c9cc58ff1e9be6b3`
+ - `fstar-bin-e2606b6eea1874c1ebd58dfc00e0b7541fcdd54a`
+ - `fstar-bin-e41c72509184973ba94dc5d769c2aa0d73408657`
+ - `fstar-bin-e864f2e992ac13a2daf0a27cf6e0b51b257c2994`
+ - `fstar-bin-e8ddee2ba96b7b83235efd06e96849f92365a2e6`
+ - `fstar-bin-eacfde7be96b329c7cee610322ae0ebbadec50b3`
+ - `fstar-bin-eddcfa595a1403131abd130b79b30942391aa5aa`
+ - `fstar-bin-ef5709588f3bffb0d8b41ceec7744197f2aaae12`
+ - `fstar-bin-f039134bc4482f08437d3c5ad218ee60d47a0dbc`
+ - `fstar-bin-f087a6beb7b9f1d08ca7644e908907318fb4c039`
+ - `fstar-bin-f0dd8f298aa6c968e34d2e9d2f04f353f08126d4`
+ - `fstar-bin-f1730e528367f1235ff321ecca67380f1bb433ba`
+ - `fstar-bin-f1de078c2f2addb27a56eaa4046f02d6ce6dec3a`
+ - `fstar-bin-f35ccb139f552ee9a2d9a504961620aa3ddebaa4`
+ - `fstar-bin-f3b93c8ada9d661a23cf4136727c9b7942f0a5e6`
+ - `fstar-bin-f454dc7e906513a88ee2dd681a1269cfaa9c9f3d`
+ - `fstar-bin-f4756ad446a1b7f95eee2744a32bc8058403274f`
+ - `fstar-bin-f5ea7885c5f528359e933aef99a27d249dce75f5`
+ - `fstar-bin-f6a853185110b4fe1f9b0244109e0fa53ddcd5be`
+ - `fstar-bin-f748ab89df3f83d00a72d97754358223fc801334`
+ - `fstar-bin-f8f5746352c4acd331bd43366d12b733afe67aaf`
+ - `fstar-bin-faa39d56510ed1585c134903d90b8c616e8a7cb9`
+ - `fstar-bin-faa8c372f4ca84e069653f166151dd0b85058f4f`
+ - `fstar-bin-fbf29ff38e99853bee8323cf9e7074f6d263c2a4`
+ - `fstar-bin-fca134b5d212431b0430774f26cbc3ba500b9445`
+ - `fstar-bin-fe36343913eb7c9bad30788679f3ae8e7363377e`
+ - `pr-1854`
+ - `pr-1887`
+ - `pr-1909`
+ - `pr-2011`
+ - `pr-2063`
+ - `pr-2096`
+ - `pr-2165`
+ - `pr-2176`
+ - `pr-2179`
+ - `pr-2183`
+ - `pr-2186`
+ - `pr-2188`
+ - `pr-2207`
+ - `pr-2233`
+ - `pr-2260`
+ - `pr-2298`
+ - `pr-2300`
+ - `pr-2305`
+ - `pr-2308`
+ - `pr-2313`
+ - `pr-2315`
+ - `pr-2318`
+ - `pr-2319`
+ - `pr-2333`
+ - `pr-2349`
+ - `pr-2360`
+ - `pr-2364`
+ - `pr-2367`
+ - `pr-2368`
+ - `pr-2375`
+<!-- LIST -->
+
+</details>
+
+## Update
+Commits and pull-requests are stored in `db.json` and `pull-requests.json`, to update them, clone this repo, and run `nix run .#update`. This will update the present README as well.
+
