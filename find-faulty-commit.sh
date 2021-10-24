@@ -45,17 +45,15 @@ declare -gA spin
 
 log () {
     kill_pretty_status
-    FIRST_PRETTY_PRINT=yes
     echo "$1"
+    dummy_five_lines
 }
 
-FIRST_PRETTY_PRINT=yes
+dummy_five_lines () {
+    printf " \n \n \n \n \n"
+}
 pretty_status () {
-    if [[ "$FIRST_PRETTY_PRINT" == "no" ]]; then
-	printf "\e[5A\e[K"
-    else
-	FIRST_PRETTY_PRINT="no"
-    fi
+    printf "\e[5A\e[K"
     COLUMNS=$(tput cols)
     spin_i=$(( ($spin_i + 1) % 4 ))
     spin_symbol="${spin[$spin_i]}"
@@ -163,6 +161,7 @@ step () {
 
 prepare
 current=0
+dummy_five_lines
 update_pretty_status &
 
 current=$max; test-current-fstar
