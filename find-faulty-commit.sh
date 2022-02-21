@@ -69,8 +69,6 @@ pretty_status () {
     printf "\e[90m%-$(( $COLUMNS / 2 ))s%$(( $COLUMNS - $COLUMNS / 2 ))s" "$(date -d @$DATE_RANGE_MIN)" "$(date -d @$DATE_RANGE_MAX)"
 
     if [ -z "$DISABLE_PRETTY_STATUS" ]; then
-	printf '\n\n\n\n'
-    else
 	printf "\n\e[0m┌"
 	for i in $(seq $init_min $init_max); do
             printf "─"
@@ -92,6 +90,8 @@ pretty_status () {
             printf "─"
 	done
 	printf "┘\n"
+    else
+	printf '\n\n\n\n'
     fi
 }
 
