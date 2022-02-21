@@ -24,8 +24,6 @@ prepare () {
     min=0
     max=$(( ${#commits[@]} - 1 ))
 
-    echo "currentflake=$CURRENTFLAKE"
-    
     init_min=$min
     init_max=$max    
     
@@ -70,7 +68,9 @@ pretty_status () {
     printf " \e[90m[$min<->$max, cur=$current, commit=$commit]\e[0m\n"
     printf "\e[90m%-$(( $COLUMNS / 2 ))s%$(( $COLUMNS - $COLUMNS / 2 ))s" "$(date -d @$DATE_RANGE_MIN)" "$(date -d @$DATE_RANGE_MAX)"
 
-    [ -z "$DISABLE_PRETTY_STATUS" ] || {
+    if [ -z "$DISABLE_PRETTY_STATUS" ]; then
+	printf '\n\n\n\n'
+    else
 	printf "\n\e[0m┌"
 	for i in $(seq $init_min $init_max); do
             printf "─"
@@ -92,7 +92,7 @@ pretty_status () {
             printf "─"
 	done
 	printf "┘\n"
-    }
+    fi
 }
 
 update_pretty_status () {
@@ -118,7 +118,6 @@ status () {
 }
 
 build-current-fstar () {
-    echo "current=$current"
     commit="${commits[$current]}"
     set_current_status "build"
     if nix build --quiet --no-link "$CURRENTFLAKE#fstar-bin-${commit}" 1>/dev/null 2>/dev/null; then
@@ -148,7 +147,7 @@ test-current-fstar () {
 
 echo "" > status
 set_current_status () {
-    echo "$current $1" >> status
+    echo " • commit='$current', status='$1'" >> status
     results[$current]="$1"
     kill_pretty_status
     update_pretty_status &
