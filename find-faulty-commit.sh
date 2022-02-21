@@ -69,27 +69,30 @@ pretty_status () {
     esac
     printf " \e[90m[$min<->$max, cur=$current, commit=$commit]\e[0m\n"
     printf "\e[90m%-$(( $COLUMNS / 2 ))s%$(( $COLUMNS - $COLUMNS / 2 ))s" "$(date -d @$DATE_RANGE_MIN)" "$(date -d @$DATE_RANGE_MAX)"
-    printf "\n\e[0m┌"
-    for i in $(seq $init_min $init_max); do
-        printf "─"
-    done
-    printf "┐\n│"
-    for i in $(seq $init_min $init_max); do
-	case "${results[$i]}" in
-	    ("build") printf "\e[7;30;43m%s" "$spin_symbol";;
-	    ("test") printf "\e[34m%s" "$spin_symbol";;
-	    ("build-failure") printf "\e[91m█";;
-	    ("success") printf "\e[32m▓";;
-	    ("failure") printf "\e[91m▓";;
-	    (*) printf " ";
-	esac
-	printf "\e[0m";
-    done
-    printf "\e[0m│\n└"
-    for i in $(seq $init_min $init_max); do
-        printf "─"
-    done
-    printf "┘\n"
+
+    [ -z "$DISABLE_PRETTY_STATUS" ] || {
+	printf "\n\e[0m┌"
+	for i in $(seq $init_min $init_max); do
+            printf "─"
+	done
+	printf "┐\n│"
+	for i in $(seq $init_min $init_max); do
+	    case "${results[$i]}" in
+		("build") printf "\e[7;30;43m%s" "$spin_symbol";;
+		("test") printf "\e[34m%s" "$spin_symbol";;
+		("build-failure") printf "\e[91m█";;
+		("success") printf "\e[32m▓";;
+		("failure") printf "\e[91m▓";;
+		(*) printf " ";
+	    esac
+	    printf "\e[0m";
+	done
+	printf "\e[0m│\n└"
+	for i in $(seq $init_min $init_max); do
+            printf "─"
+	done
+	printf "┘\n"
+    }
 }
 
 update_pretty_status () {
