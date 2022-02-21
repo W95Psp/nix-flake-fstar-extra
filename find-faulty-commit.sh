@@ -164,6 +164,22 @@ step () {
     esac
 }
 
+echo "Meaning of colors:"
+for i in "build" "test" "build-failure" "success" "failure"; do
+    printf " - "
+    case "$i" in
+	("build") printf "\e[7;30;43m%s" "$spin_symbol";;
+	("test") printf "\e[34m%s" "$spin_symbol";;
+	("build-failure") printf "\e[91m█";;
+	("success") printf "\e[32m▓";;
+	("failure") printf "\e[91m▓";;
+	(*) printf " ";
+    esac
+    printf " %s" "$i"
+    printf "\e[0m\n"
+done
+echo ""
+
 prepare
 current=0
 dummy_five_lines
