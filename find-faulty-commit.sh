@@ -5,7 +5,9 @@ trap "exit" SIGINT
 if [ "$#" -eq 0 ]; then
     echo "Illegal number of parameters."
     echo "Usage:"
-    echo "  $(printf %q "$BASH_SOURCE") Module.fst [min-commit] [max-commit]"
+    echo "  $(printf %q "$BASH_SOURCE") Module.fst [min-commit-timestamp] [max-commit-timestamp]"
+    echo ""
+    echo "e.g. '$(printf %q "$BASH_SOURCE")" Module.fst '$(date -d ''12/31/2000'' +''%s'')' '$(date -d ''12/31/2021'' +''%s'')'''
     exit 1
 fi
 
@@ -22,6 +24,8 @@ prepare () {
     min=0
     max=$(( ${#commits[@]} - 1 ))
 
+    echo "currentflake=$CURRENTFLAKE"
+    
     init_min=$min
     init_max=$max    
     
@@ -111,6 +115,7 @@ status () {
 }
 
 build-current-fstar () {
+    echo "current=$current"
     commit="${commits[$current]}"
     set_current_status "build"
     if nix build --quiet --no-link "$CURRENTFLAKE#fstar-bin-${commit}" 1>/dev/null 2>/dev/null; then
